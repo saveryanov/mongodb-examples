@@ -1,10 +1,8 @@
 ﻿var MongoClient = require('mongodb').MongoClient;
 
-// Connect to the db
+// Подключение к exampleDb
 MongoClient.connect("mongodb://localhost:27017/exampleDb", function(error, db) {
 	if(!error) {
-		console.log("mongodb connected");
-
 		// Создаем объекты книг
 		a = { 
 			title:"Война и мир", 
@@ -20,11 +18,31 @@ MongoClient.connect("mongodb://localhost:27017/exampleDb", function(error, db) {
 			title:"Черновик", 
 			authorSurname:"Лукьяненко", 
 			authorName:"Сергей" 
-		};		
-		// Сохранение в коллекции books
+		};	
+		
+		// Сохранение объектов поштучно в коллекции books
 		db.collection('books').insert(a);
 		db.collection('books').insert(b);
-		db.collection('books').insert(c);
+		db.collection('books').insert(c, {w:1}, function(err, result) {		// так можно получить результат операции
+			console.log('Вывод результата добавления одного объекта.');
+			console.log(err);
+			console.log(result);
+			
+			console.log('ID записи:');
+			console.log(result.insertedIds);	// получить id вставленной записи (одной!)
+		});	
+		
+		// Сохранение всех сразу
+		var lotsOfBooks = [a, b, c];	// [{'hello':'doc3'}, {'hello':'doc4'}]
+		db.collection('books').insert(lotsOfBooks, {w:1}, function(err, result) {
+			console.log('Вывод результата добавления 3х объектов.');
+			console.log(err);
+			console.log(result);
+			
+			console.log('ID записей:');
+			console.log(result.getInsertedIds());	// получить id вставленных записей (многих!)
+		});
+		
 	} else {
 		console.log("mongodb not connected");
 	}

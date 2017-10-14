@@ -5,7 +5,7 @@ MongoClient.connect("mongodb://localhost:27017/exampleDb", function(error, db) {
 	// error - объект ошибки. если пустой, то все ок
 	// db - объект для взаимодействия с базой
 	
-	console.log(err);
+	console.log(error);
 	if(!error) {  // Проверка на наличие ошибок
 		console.log("mongodb connected"); 
 	} else {
