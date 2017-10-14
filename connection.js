@@ -1,10 +1,15 @@
-﻿var MongoClient = require('mongodb').MongoClient;
+﻿﻿var MongoClient = require('mongodb').MongoClient;
 
-// Connect to the db
-MongoClient.connect("mongodb://localhost:27017/exampleDb", function(err, db) {
-  if(!err) {
-    console.log("mongodb connected");	
-  } else {
-    console.log("mongodb not connected");
-  }
+// Подключение к базе данных exampleDb
+MongoClient.connect("mongodb://localhost:27017/exampleDb", function(error, db) {
+	// error - объект ошибки. если пустой, то все ок
+	// db - объект для взаимодействия с базой
+	
+	console.log(err);
+	if(!error) {  // Проверка на наличие ошибок
+		console.log("mongodb connected"); 
+	} else {
+		console.log("mongodb not connected");
+	}
 });
+
