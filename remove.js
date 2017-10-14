@@ -1,7 +1,8 @@
 ﻿var MongoClient = require('mongodb').MongoClient;
+﻿var conf = require('./conf');	// конфигурация подключения
 
-// Подключение к exampleDb
-MongoClient.connect("mongodb://localhost:27017/exampleDb", function(error, db) {
+// Подключение к базе данных exampleDb
+MongoClient.connect(conf.getConnectionURI(), function(error, db) {
 	if(!error) {
 		// Создаем документы книг с key
 		var docs = [{ 

@@ -1,7 +1,8 @@
 ﻿﻿var MongoClient = require('mongodb').MongoClient;
+﻿var conf = require('./conf');	// конфигурация подключения
 
 // Подключение к базе данных exampleDb
-MongoClient.connect("mongodb://localhost:27017/exampleDb", function(error, db) {
+MongoClient.connect(conf.getConnectionURI(), function(error, db) {
 	// error - объект ошибки. если пустой, то все ок
 	// db - объект для взаимодействия с базой
 	
