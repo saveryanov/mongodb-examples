@@ -19,7 +19,7 @@ var MongoClient = require('mongodb').MongoClient;
 // Подключение к exampleDb
 MongoClient.connect("mongodb://localhost:27017/exampleDb", function(error, db) {
 	if(!error) {
-		// Создаем объект книги с key
+		// Создаем документы книг с key
 		var docs = [{ 
 			key: 1,		// поле идентификатор
 			fieldtoupdate: "Содержимое поля при добавлении",	// поле которое будет изменено
@@ -35,16 +35,16 @@ MongoClient.connect("mongodb://localhost:27017/exampleDb", function(error, db) {
 			authorName:"Проверятор" 
 		}];
 		
-		// Пример изменения поля объекта (документа)
-		// insert объекта с key = 1
+		// Пример изменения поля документа
+		// insert документа с key = 1
 		db.collection('books').insert(docs, {w:1}, function(err, result) {
-			// Изменение свежего объекта с key = 1
+			// Изменение свежего документа с key = 1
 			db.collection('books').update(
 				{key:1}, // массив полей по которым ищем (аналог SQL where). В нашем случае это key = 1
-				{$set:{fieldtoupdate:"Содержимое поля после обновления"}}, 	// То что обновляем (аналог SQL set column1 = 'value1' ...), $set - операция (о них выше)
-				{w:1}, 
+				{$set:{fieldtoupdate:"Содержимое поля после обновления"}}, 	// что делаем с документом (аналог SQL set column1 = 'value1' ...), $set - операция (о них выше)
+				{w:1}, 	// {w:1} option the result parameter in the callback will return the value 1 indicating that 1 document was modified by the update statement.
 				function(err, result) {
-					console.log('Вывод результата изменения объекта с key = 1.');
+					console.log('Вывод результата изменения документа с key = 1.');
 					console.log(err);
 					console.log(result);
 					
@@ -53,10 +53,6 @@ MongoClient.connect("mongodb://localhost:27017/exampleDb", function(error, db) {
 				}
 			);
 		});
-		
-		
-			
-		
 		
 	} else {
 		console.log("mongodb not connected");
